@@ -1,0 +1,19 @@
+log4j.rootCategory=info,stdout,dailyfile
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.target=System.err
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%p [%t] %C.%M(%L) | %m%n
+
+log4j.appender.dailyfile=org.apache.log4j.DailyRollingFileAppender 
+log4j.appender.dailyfile.file=D:/logs/demoproject
+log4j.appender.dailyfile.DatePattern='_'yyyy-MM-dd'.log'
+log4j.appender.dailyfile.ImmediateFlush=true
+log4j.appender.dailyfile.Append=true
+log4j.appender.dailyfile.Threshold=info
+log4j.appender.dailyfile.layout=org.apache.log4j.PatternLayout 
+log4j.appender.dailyfile.layout.ConversionPattern=%d %5p [%t] (%F:%L) - %m%n 
+
+log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
+
+log4j.logger.net.sourceforge.jdbclogger=DEBUG

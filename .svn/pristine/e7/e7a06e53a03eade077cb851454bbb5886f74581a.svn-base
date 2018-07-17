@@ -1,0 +1,25 @@
+package com.telecom.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.telecom.dao.TowerUserDao;
+import com.telecom.entity.TowerUser;
+
+/**
+ * Dao实现类 - 用户
+ */
+
+@Repository("towerUserDaoImpl")
+public class TowerUserDaoImpl extends BaseDaoImpl<TowerUser, String> implements
+		TowerUserDao {
+
+	@Override
+	public String getTowerUserIdByPhone(String phone) {
+		// TODO Auto-generated method stub
+		String sql = "select id from ct_tower_user where phone = :phone";
+		String id = (String) getSession().createSQLQuery(sql)
+				.setParameter("phone", phone).uniqueResult();
+		return id;
+	}
+
+}

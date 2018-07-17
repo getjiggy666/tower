@@ -1,0 +1,128 @@
+package com.telecom.action.app;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.opensymphony.oscache.util.StringUtil;
+import com.telecom.entity.Route;
+import com.telecom.entity.RouteCreatorRecord;
+import com.telecom.entity.TowerUser;
+import com.telecom.service.RouteCreatorRecordService;
+import com.telecom.service.RouteEntrantsRecordService;
+import com.telecom.service.RouteService;
+import com.telecom.service.TowerUserService;
+import com.telecom.util.JsonUtil;
+
+@ParentPackage("app")
+public class RouteAction extends BaseAppAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6588944346702629607L;
+
+	@Resource(name = "routeServiceImpl")
+	private RouteService routeService;
+
+	@Resource(name = "towerUserServiceImpl")
+	private TowerUserService towerUserService;
+
+	@Resource(name = "routeCreatorRecordServiceImpl")
+	private RouteCreatorRecordService routeCreatorRecordService;
+
+	@Resource(name = "routeEntrantsRecordServiceImpl")
+	private RouteEntrantsRecordService routeEntrantsRecordService;
+
+	private String routeId;// 路线id
+	private String routeCreator;// 路线发起者手机号
+
+	/**
+	 * 获取路线
+	 * 
+	 * @throws Exception
+	 */
+	public String getroute() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Route> routeList = routeService.getAllList();
+		if (routeList != null && routeList.size() != 0) {
+			map.put("status", "true");
+			map.put("routeList", routeList);
+			map.put("msg", "获取成功");
+		} else {
+			map.put("status", "false");
+			map.put("msg", "获取失败");
+		}
+		return output(JsonUtil.toJson(map));
+	}
+
+	/**
+	 * 查看路线详情
+	 * 
+	 * @throws Exception
+	 */
+
+	public String getroute_detail() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (routeId != null) {
+			map.put("status", "true");
+			map.put("scenicSpotList", routeService.getScenicSpotList(routeId));
+			map.put("msg", "获取成功");
+		} else {
+			map.put("status", "false");
+			map.put("msg", "获取失败");
+		}
+		return output(JsonUtil.toJson(map));
+	}
+
+	/**
+	 * 发起路线
+	 * 
+	 * @throws Exception
+	 */
+	public String create_route() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (routeId != null && routeCreator != null) {
+			String towerUserId = towerUserService
+					.getTowerUserIdByPhone(routeCreator);
+			if (StringUtil.isEmpty(towerUserId)) {
+				TowerUser tU = new TowerUser();
+				tU.setPhone(routeCreator);
+				towerUserService.save(tU);
+			}
+			RouteCreatorRecord rcr = new RouteCreatorRecord();
+			rcr.setRoute(routeId);
+			rcr.setRouteCreator(towerUserService
+					.getTowerUserIdByPhone(routeCreator));
+			rcr.setStatus("0");
+			routeCreatorRecordService.save(rcr);
+			map.put("status", "true");
+			map.put("scenicSpotList", routeService.getScenicSpotList(routeId));
+			map.put("msg", "发起成功");
+		} else {
+			map.put("status", "false");
+			map.put("msg", "发起失败");
+		}
+		return output(JsonUtil.toJson(map));
+	}
+
+	public String getRouteId() {
+		return routeId;
+	}
+
+	public void setRouteId(String routeId) {
+		this.routeId = routeId;
+	}
+
+	public String getRouteCreator() {
+		return routeCreator;
+	}
+
+	public void setRouteCreator(String routeCreator) {
+		this.routeCreator = routeCreator;
+	}
+}

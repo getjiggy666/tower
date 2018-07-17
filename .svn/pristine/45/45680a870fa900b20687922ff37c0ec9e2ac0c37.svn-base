@@ -1,0 +1,145 @@
+package com.telecom.dao.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.telecom.dao.RouteDao;
+import com.telecom.entity.Route;
+import com.telecom.entity.ScenicSpot;
+import com.telecom.util.MapUtils;
+
+/**
+ * Dao实现类 - 路线
+ */
+
+@Repository("routeDaoImpl")
+public class RouteDaoImpl extends BaseDaoImpl<Route, String> implements
+		RouteDao {
+
+	/**
+	 * 根据线路id获取地区详情
+	 */
+	@Override
+	public List<ScenicSpot> getScenicSpotList(String routeId) {
+		// TODO Auto-generated method stub
+		String scenicSpotIdSql = "select scenic_spot_id from route_list where route_id = :routeId";
+		@SuppressWarnings("unchecked")
+		List<String> list = getSession().createSQLQuery(scenicSpotIdSql)
+				.setParameter("routeId", routeId).list();
+		List<ScenicSpot> scenicSpotList = new ArrayList<ScenicSpot>();
+		for (String scenicSpotId : list) {
+			String hql = "from ScenicSpot as scenicSpot where lower(scenicSpot.id) = lower(:scenicSpotId)";
+			scenicSpotList.add((ScenicSpot) getSession().createQuery(hql)
+					.setParameter("scenicSpotId", scenicSpotId).uniqueResult());
+		}
+		return scenicSpotList;
+	}
+
+	/**
+	 * 根据线路id获取地区详情
+	 */
+	@Override
+	public List<Map<String, Object>> getEntrantsRouteList(
+			String routeCreatorRecordId) {
+		// TODO Auto-generated method stub
+		// select css.* from ct_scenic_spot css join route_list rl join
+		// ct_route_creator_record cr where css.id = rl.scenic_spot_id and
+		// rl.route_id = cr.route and cr.id =
+		// '8a48e28f630abc8301630abcf8170001';
+		// 获取景点id列表
+		String sql = "select scenic_spot_id from route_list rl join ct_route_creator_record cr where rl.route_id = cr.route and cr.id = :routeCreatorRecordId";
+		@SuppressWarnings("unchecked")
+		List<String> scenicSpotList = getSession().createSQLQuery(sql)
+				.setParameter("routeCreatorRecordId", routeCreatorRecordId)
+				.list();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		for (String scenicSpotId : scenicSpotList) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			String hql = "from ScenicSpot as scenicSpot where lower(scenicSpot.id) = lower(:scenicSpotId)";
+			ScenicSpot scenicSpot = (ScenicSpot) getSession().createQuery(hql)
+					.setParameter("scenicSpotId", scenicSpotId).uniqueResult();
+			map.put("scenicSpotId", scenicSpotId);
+			map.put("scenicSpotName", scenicSpot.getScenicName());
+			map.put("scenicSpotContent", scenicSpot.getScenicContent());
+			String imgSql = "select img_url from ct_route_entrants_record where route_creator_record = :routeCreatorRecordId and scenic_spot = :scenicSpotId";
+			@SuppressWarnings("unchecked")
+			List<String> imgUrlList = getSession().createSQLQuery(imgSql)
+					.setParameter("routeCreatorRecordId", routeCreatorRecordId)
+					.setParameter("scenicSpotId", scenicSpotId).list();
+			if (imgUrlList == null || imgUrlList.size() == 0) {
+				map.put("imgStatus", "0");
+			} else {
+				map.put("imgStatus", "1");
+				map.put("imgUrl", imgUrlList.get(0));
+			}
+			list.add(map);
+		}
+		return list;
+	}
+
+	/**
+	 * 判断经纬度是否在区间内
+	 */
+	@Override
+	public boolean regionBoolean(String scenicSpotId, String latitude,
+			String longitude) {
+		// TODO Auto-generated method stub
+		String hql = "from ScenicSpot as scenicSpot where lower(scenicSpot.id) = lower(:scenicSpotId)";
+		ScenicSpot scenicSpot = (ScenicSpot) getSession().createQuery(hql)
+				.setParameter("scenicSpotId", scenicSpotId).uniqueResult();
+		Double mLatitude = scenicSpot.getLatitude().doubleValue();
+		Double mLongitude = scenicSpot.getLongitude().doubleValue();
+		Double latitudeDouble = Double.parseDouble(latitude);
+		Double longitudeDouble = Double.parseDouble(longitude);
+		if (MapUtils.GetDistance(mLatitude, mLongitude, latitudeDouble,
+				longitudeDouble) < 1000) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 如果路线已完成，修改route_creator_record记录status
+	 */
+	@Override
+	public boolean setRouteStatus(String routeCreatorRecordId) {
+		// TODO Auto-generated method stub
+		String sqlRecordCount = "select count(*) from ct_route_entrants_record where route_creator_record = :routeCreatorRecordId";
+		int recordCount = (int) getSession().createSQLQuery(sqlRecordCount)
+				.setParameter("routeCreatorRecordId", routeCreatorRecordId)
+				.uniqueResult();
+		String sqlScenicSpotCount = "select count(*) from route_list rl join ct_route_creator_record crcr where rl.route_id = crcr.route and crcr.id = :routeCreatorRecordId";
+		int scenicSpotCount = (int) getSession()
+				.createSQLQuery(sqlScenicSpotCount)
+				.setParameter("routeCreatorRecordId", routeCreatorRecordId)
+				.uniqueResult();
+		if (recordCount >= scenicSpotCount) {
+			String sqlSetStatus = "update ct_route_creator_record set status = '1' where id = :routeCreatorRecordId";
+			getSession().createSQLQuery(sqlSetStatus).executeUpdate();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 查看照片是否重复上传
+	 */
+	@Override
+	public boolean isUploadRepeat(String routeCreatorRecordId,
+			String routeEntrants) {
+		// TODO Auto-generated method stub
+		String sql = "select * from ct_route_creator_record where route_creator_record = :routeCreatorRecordId and route_entrants = :routeEntrants";
+		@SuppressWarnings("unchecked")
+		List<String> list = getSession().createSQLQuery(sql)
+				.setParameter("routeCreatorRecordId", routeCreatorRecordId)
+				.setParameter("routeEntrants", routeEntrants).list();
+		if (list == null || list.size() == 0) {
+			return true;
+		}
+		return false;
+	}
+}

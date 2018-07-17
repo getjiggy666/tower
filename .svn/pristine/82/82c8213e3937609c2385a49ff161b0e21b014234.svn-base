@@ -1,0 +1,38 @@
+package com.telecom.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.telecom.dao.RouteDao;
+import com.telecom.entity.Route;
+import com.telecom.entity.ScenicSpot;
+import com.telecom.service.RouteService;
+
+/**
+ * Dao实现类 - 路线
+ */
+
+@Service("routeServiceImpl")
+public class RouteServiceImpl extends BaseServiceImpl<Route, String> implements
+		RouteService {
+
+	@Resource(name = "routeDaoImpl")
+	RouteDao routeDao;
+
+	@Resource(name = "routeDaoImpl")
+	public void setBaseDao(RouteDao routeDao) {
+		super.setBaseDao(routeDao);
+	}
+
+	/**
+	 * 根据线路id获取地区详情
+	 */
+	@Override
+	public List<ScenicSpot> getScenicSpotList(String routeId) {
+		// TODO Auto-generated method stub
+		return routeDao.getScenicSpotList(routeId);
+	}
+}

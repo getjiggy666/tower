@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+<urlrewrite>
+	
+	<!-- 
+	
+	(\w+)表示参数的正则表达式，对应下方的$1
+	$amp;是'&'符号
+	%{query-string}表示url后面跟的参数
+	
+	<rule>
+		<note>示例</note>
+		<from>^/(\w+).html</from>
+		<to type="forward">/admin/test!test.action?id=$1&amp;%{query-string}</to>
+	</rule>
+	 -->
+	
+</urlrewrite>

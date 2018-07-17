@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<demoproject>
+	<description>模板配置文件</description>
+	<page>
+		<errorPage>
+			<description>错误页</description>
+			<templatePath>WEB-INF/template/admin/error_page.ftl</templatePath>
+			<htmlPath>/html/error_page.html</htmlPath>
+		</errorPage>
+		<errorPageAccessDenied>
+			<description>权限错误页</description>
+			<templatePath>WEB-INF/template/admin/error_page.ftl</templatePath>
+			<htmlPath>/html/error_page_access_denied.html</htmlPath>
+		</errorPageAccessDenied>
+		<errorPage500>
+			<description>错误页500</description>
+			<templatePath>WEB-INF/template/admin/error_page.ftl</templatePath>
+			<htmlPath>/html/error_page_500.html</htmlPath>
+		</errorPage500>
+		<errorPage404>
+			<description>错误页404</description>
+			<templatePath>WEB-INF/template/admin/error_page.ftl</templatePath>
+			<htmlPath>/html/error_page_404.html</htmlPath>
+		</errorPage404>
+		<errorPage403>
+			<description>错误页403</description>
+			<templatePath>WEB-INF/template/admin/error_page.ftl</templatePath>
+			<htmlPath>/html/error_page_403.html</htmlPath>
+		</errorPage403>
+		<articleContent>
+			<description>WEB文章内容</description>
+			<templatePath>WEB-INF/template/admin/article_content.ftl</templatePath>
+			<htmlPath>/html/admin/{date(yyyyMM)}/{uuid}.html</htmlPath>
+		</articleContent>
+	</page>
+	<mail>
+		<smtpTest>
+			<description>SMTP邮箱配置测试</description>
+			<subject>SMTP邮箱配置测试</subject>
+			<templatePath>WEB-INF/template/admin/mail_smtp_test.ftl</templatePath>
+		</smtpTest>
+	</mail>
+</demoproject>

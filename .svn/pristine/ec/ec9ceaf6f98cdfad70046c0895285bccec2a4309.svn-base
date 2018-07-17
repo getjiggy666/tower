@@ -1,0 +1,33 @@
+package com.telecom.action.admin;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.telecom.service.RouteService;
+import com.telecom.service.ScenicSpotService;
+
+/**
+ * 后台Action类 - 景点
+ */
+
+@ParentPackage("admin")
+public class ScenicSpotAction extends BaseAdminAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7203820273583851616L;
+
+	@Resource(name = "scenicSpotServiceImpl")
+	private ScenicSpotService scenicSpotService;
+
+	@Resource(name = "routeServiceImpl")
+	private RouteService routeService;
+
+	// 列表
+	public String list() {
+		pager = scenicSpotService.findPager(pager);
+		return LIST;
+	}
+}

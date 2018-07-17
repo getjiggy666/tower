@@ -1,0 +1,227 @@
+<#assign sec=JspTaglibs["/WEB-INF/tld/security.tld"] />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>管理菜单</title>
+<link href="${base}/template/admin/css/base.css" rel="stylesheet" type="text/css" />
+<link href="${base}/template/admin/css/admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${base}/template/common/js/jquery.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+ //菜单点击事件
+ $('.menulist  dl dd').click(function(){
+ 	  $('.singleItem').removeClass('cur');
+	  $('.menulist  dl dd').removeClass('cur');
+	  $(this).addClass('cur');
+	  var st=$(this).find('a').attr("href");
+	  window.parent.mainFrame.location=st;
+ });
+ $('.singleItem').click(function(){
+	  $('.menulist  dl dd').removeClass('cur');
+ 	  $('.singleItem').removeClass('cur');
+	  $('.menulist  dl dd').removeClass('cur');
+	  $(this).addClass('cur');
+	  var st=$(this).find('a').attr("href");
+	  window.parent.mainFrame.location=st;
+ });
+ $('.menulist  dl dt').click(function(){
+	 $('.menulist  dl').removeClass('cur');
+     $this=$(this);
+	 $this.parent('dl').addClass('cur');
+ });
+});
+</script>
+</head>
+<body class="menu">
+  <image src='${base}/template/admin/images/header-logo.jpg'/>
+  <div class="body menulist">
+  
+	<!--<dl>
+		<dt class="ico3 notop cur singleItem"><a href="page!index.action" target="mainFrame">我的首页</a></dt>
+	</dl>-->
+	 
+    <!--<@sec.authorize ifAnyGranted="
+		ROLE_ARTICLE,ROLE_ARTICLE_ADD,ROLE_ARTICLE_EDIT,ROLE_ARTICLE_DELETE,
+		ROLE_ARTICLE_CATEGORY,ROLE_ARTICLE_CATEGORY_ADD,ROLE_ARTICLE_CATEGORY_EDIT,ROLE_ARTICLE_CATEGORY_DELETE">
+		<dl>
+			<dt class="ico2 notop">
+				内容管理<span class="num">3</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_ARTICLE">
+				<dd>
+					<a href="article!add.action" target="mainFrame">添加文章</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_ARTICLE">
+				<dd>
+					<a href="article!list.action" target="mainFrame">文章列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_ARTICLE_CATEGORY">
+				<dd>
+					<a href="article_category!list.action" target="mainFrame">文章分类列表</a>
+				</dd>
+			</@sec.authorize>
+		</dl>
+    </@sec.authorize>
+	
+	<@sec.authorize ifAnyGranted="
+		ROLE_SMS_TEMPLATE_ADD,ROLE_SMS_TEMPLATE_EDIT,
+		ROLE_SMS_TEMPLATE_DELETE,ROLE_SMS_TEMPLATE,
+		ROLE_SMS_TEMPLATE_CHECK,ROLE_SMS,ROLE_MESSAGE,ROLE_MESSAGE_TEMPLATE，
+		ROLE_MESSAGE,ROLE_MESSAGE_TEMPLATE">
+		<dl>
+			<dt class="ico2 notop">
+				短信管理<span class="num">6</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_SMS">
+				<dd>
+					<a href="sms!list.action" target="mainFrame">短信列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_SMS_TEMPLATE">
+				<dd>
+					<a href="sms_template!list.action" target="mainFrame">短信模板列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_SMS_TEMPLATE_CHECK">
+				<dd>
+					<a href="sms_template!checkList.action" target="mainFrame">待审核列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_MESSAGE">
+				<dd>
+					<a href="message!inbox.action" target="mainFrame">收件箱</a>
+				</dd>
+				<dd>
+					<a href="message!outbox.action" target="mainFrame">发件箱</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_MESSAGE_TEMPLATE">
+				<dd>
+					<a href="message_template!list.action" target="mainFrame">通知模板列表</a>
+				</dd>
+			</@sec.authorize>
+			</dl>
+		</dl>
+	</@sec.authorize>
+	 
+    <@sec.authorize ifAnyGranted="ROLE_ADMIN,ROLE_ROLE,ROLE_DEPARTMENT,ROLE_LOG">
+		<dl>
+			<dt class="ico6 notop">
+				权限管理<span class="num">4</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_ADMIN">
+				<dd>
+					<a href="admin!list.action" target="mainFrame">用户管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_DEPARTMENT">
+				<dd>
+					<a href="department!list.action" target="mainFrame">部门管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_ROLE">
+				<dd>
+					<a href="role!list.action" target="mainFrame">角色管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="log!list.action" target="mainFrame">查看日志</a>
+				</dd>
+			</@sec.authorize>
+		</dl>
+    </@sec.authorize>
+	 
+	<@sec.authorize ifAnyGranted="ROLE_SETTING,
+		ROLE_PRODUCT_ADD,ROLE_PRODUCT_EDIT,ROLE_PRODUCT_DELETE,ROLE_PRODUCT,
+		ROLE_ACCESS_STRATEGY,ROLE_ACCESS_STRATEGY_ADD,ROLE_ACCESS_STRATEGY_DELETE,ROLE_ACCESS_STRATEGY_EDIT,
+		ROLE_MAIL_TEMPLATE_EDIT,ROLE_MAIL_TEMPLATE,
+		ROLE_AREA_ADD,ROLE_AREA_EDIT,ROLE_AREA_DELETE,ROLE_AREA,ROLE_NUMBER_SEGMENT,ROLE_CONTACT,ROLE_BUILD_HTML">
+		<dl>
+			<dt class="ico1 notop">
+				系统设置<span class="num">4</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_SETTING">
+				<dd>
+					<a href="setting!edit.action" target="mainFrame">系统参数</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_AREA_ADD,ROLE_AREA_EDIT,ROLE_AREA_DELETE,ROLE_AREA">
+				<dd>
+					<a href="area!list.action" target="mainFrame">地区管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_ACCESS_STRATEGY,ROLE_ACCESS_STRATEGY_ADD,ROLE_ACCESS_STRATEGY_DELETE,ROLE_ACCESS_STRATEGY_EDIT">
+				<dd>
+					<a href="access_strategy!list.action" target="mainFrame">访问策略</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_BUILD_HTML">
+				<dd>
+					<a href="build_html!allInput.action" target="mainFrame">页面静态化</a>
+				</dd>
+			</@sec.authorize>
+		</dl>
+	</@sec.authorize>-->
+	
+	   <@sec.authorize ifAnyGranted="ROLE_ADMIN,ROLE_ROLE,ROLE_DEPARTMENT,ROLE_LOG">
+		<dl>
+			<dt class="ico6 notop">
+				塔兮<span class="num">3</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="tower_user!list.action" target="mainFrame">用户列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="tower_content!list.action" target="mainFrame">内容列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="route!list.action" target="mainFrame">路线列表</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="scenic_spot!list.action" target="mainFrame">足迹列表</a>
+				</dd>
+			</@sec.authorize>
+		</dl>
+    </@sec.authorize>
+    
+        <@sec.authorize ifAnyGranted="ROLE_ADMIN,ROLE_ROLE,ROLE_DEPARTMENT,ROLE_LOG">
+		<dl>
+			<dt class="ico6 notop">
+				权限管理<span class="num">4</span>
+			</dt>
+			<@sec.authorize ifAnyGranted="ROLE_ADMIN">
+				<dd>
+					<a href="admin!list.action" target="mainFrame">用户管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_DEPARTMENT">
+				<dd>
+					<a href="department!list.action" target="mainFrame">部门管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_ROLE">
+				<dd>
+					<a href="role!list.action" target="mainFrame">角色管理</a>
+				</dd>
+			</@sec.authorize>
+			<@sec.authorize ifAnyGranted="ROLE_LOG">
+				<dd>
+					<a href="log!list.action" target="mainFrame">查看日志</a>
+				</dd>
+			</@sec.authorize>
+		</dl>
+    </@sec.authorize>
+	</div>   
+</body>
+</html>

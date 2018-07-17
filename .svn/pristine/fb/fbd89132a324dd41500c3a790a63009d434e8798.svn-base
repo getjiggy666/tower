@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<demoproject>
+	<description>配置文件</description>
+	<setting>
+		<!-- 常规变量 -->
+		<systemName>Demo系统</systemName>
+		<systemUrl>http://localhost</systemUrl>
+		<contextPath></contextPath>
+		<adminLoginUrl>/admin/index.jsp</adminLoginUrl>
+		<adminLoginProcessingUrl>/admin/login/check</adminLoginProcessingUrl>
+		<imageUploadPath>\\upload\\image\\</imageUploadPath>  
+		<imageBrowsePath>/upload/image</imageBrowsePath>  
+		<distributeUserCount>10000</distributeUserCount>
+		<currencySign>￥</currencySign>
+		<currencyUnit>元</currencyUnit>
+		<uploadLimit>1024</uploadLimit>
+		<isLoginFailureLock>true</isLoginFailureLock>
+		<loginFailureLockCount>5</loginFailureLockCount>
+		<loginFailureLockTime>5</loginFailureLockTime>
+		<isGzipEnabled>false</isGzipEnabled>
+		<isUpdating>false</isUpdating>
+		<buildHtmlDelayTime>10</buildHtmlDelayTime>
+		
+		<!-- 邮件变量 -->
+		<smtpFromMail>test@189.cn</smtpFromMail>
+		<smtpFromMailNick>Demo系统</smtpFromMailNick>
+		<smtpHost>smtp.189.cn</smtpHost>
+		<smtpPort>25</smtpPort>
+		<smtpUsername>test</smtpUsername>
+		<smtpPassword>123456</smtpPassword>
+		
+		<!-- 接口变量 -->
+		<secretKey>DemoSystem</secretKey>
+		<vector>1234567890888888</vector>
+		
+		<!-- 中国电信短信发送参数 -->
+		<accessCode>6e42ac5370fd3431f05a211e604b6955</accessCode>
+		<smsUrl>http://58.53.197.139/services/msgservice.msgserviceHttpSoap11Endpoint/</smsUrl>
+		<authenCodeUrl>http://58.53.197.139/services/myservice.myserviceHttpSoap11Endpoint/</authenCodeUrl>
+	</setting>
+	<logConfig>
+		<!-- 系统设置 -->
+		<item logType="SETTING" operation="系统设置" actionClass="com.telecom.action.admin.SettingAction" actionMethod="update" />
+		<item logType="AREA" operation="删除地区" actionClass="com.telecom.action.admin.AreaAction" actionMethod="delete" />
+		<item logType="AREA" operation="添加地区" actionClass="com.telecom.action.admin.AreaAction" actionMethod="save" />
+		<item logType="AREA" operation="修改地区" actionClass="com.telecom.action.admin.AreaAction" actionMethod="update" />
+		<item logType="ACCESSSTRATEGY" operation="添加访问策略" actionClass="com.telecom.action.admin.AccessStrategyAction" actionMethod="save" />
+		<item logType="ACCESSSTRATEGY" operation="修改访问策略" actionClass="com.telecom.action.admin.AccessStrategyAction" actionMethod="update" /> 
+		<item logType="ACCESSSTRATEGY" operation="删除访问策略" actionClass="com.telecom.action.admin.AccessStrategyAction" actionMethod="delete"/>
+		
+		<!-- 通知管理  -->
+		<item logType="MESSAGE" operation="发送通知" actionClass="com.telecom.action.admin.MessageAction" actionMethod="sendSave" />
+		<item logType="MESSAGE" operation="回复通知" actionClass="com.telecom.action.admin.MessageAction" actionMethod="replySave" />
+		<item logType="MESSAGE" operation="删除通知" actionClass="com.telecom.action.admin.MessageAction" actionMethod="delete" />
+		
+		<!-- 权限管理 -->
+		<item logType="ADMIN" operation="删除用户" actionClass="com.telecom.action.admin.AdminAction" actionMethod="delete" />
+		<item logType="ADMIN" operation="添加用户" actionClass="com.telecom.action.admin.AdminAction" actionMethod="save" />
+		<item logType="ADMIN" operation="修改用户" actionClass="com.telecom.action.admin.AdminAction" actionMethod="update" />
+		<item logType="ADMIN" operation="修改个人资料" actionClass="com.telecom.action.admin.AdminProfileAction" actionMethod="update" />
+		<item logType="DEPARTMENT" operation="删除部门" actionClass="com.telecom.action.admin.DepartmentAction" actionMethod="delete" />
+		<item logType="DEPARTMENT" operation="添加部门" actionClass="com.telecom.action.admin.DepartmentAction" actionMethod="save" />
+		<item logType="DEPARTMENT" operation="修改部门" actionClass="com.telecom.action.admin.DepartmentAction" actionMethod="update" />
+		<item logType="ROLE" operation="删除角色" actionClass="com.telecom.action.admin.RoleAction" actionMethod="delete" />
+		<item logType="ROLE" operation="添加角色" actionClass="com.telecom.action.admin.RoleAction" actionMethod="save" />
+		<item logType="ROLE" operation="修改角色" actionClass="com.telecom.action.admin.RoleAction" actionMethod="update" />
+	
+		<!-- 短信管理 -->
+		<item logType="SMSTEMPLATE" operation="删除短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="delete" />
+		<item logType="SMSTEMPLATE" operation="添加短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="save" />
+		<item logType="SMSTEMPLATE" operation="修改短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="update" />
+		<item logType="SMSTEMPLATE" operation="审核通过短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="pass" />
+		<item logType="SMSTEMPLATE" operation="审核驳回短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="back" />
+		<item logType="SMSTEMPLATE" operation="审核作废短信模板" actionClass="com.telecom.action.admin.SmsTemplateAction" actionMethod="invalid" />
+	</logConfig>
+</demoproject>

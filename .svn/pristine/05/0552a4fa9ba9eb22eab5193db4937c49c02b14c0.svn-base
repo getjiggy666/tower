@@ -1,0 +1,12 @@
+package com.telecom.service;
+
+import com.telecom.entity.TowerUser;
+
+/**
+ * Service接口 - 用户
+ */
+public interface TowerUserService extends BaseService<TowerUser, String> {
+	
+	//通过手机号获得id
+	public String getTowerUserIdByPhone(String phone);
+}

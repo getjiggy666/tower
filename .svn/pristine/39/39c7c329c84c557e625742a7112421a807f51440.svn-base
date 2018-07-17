@@ -1,0 +1,45 @@
+package com.telecom.action.app;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.telecom.entity.Route;
+import com.telecom.service.RouteService;
+import com.telecom.util.JsonUtil;
+
+@ParentPackage("app")
+public class RouteAction extends BaseAppAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6588944346702629607L;
+
+	@Resource(name = "routeServiceImpl")
+	private RouteService routeService;
+
+	/**
+	 * 获取路线
+	 * 
+	 * @throws Exception
+	 */
+	public String getroute() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Route> routeList = routeService.getAllList();
+		if (routeList != null && routeList.size() != 0) {
+			map.put("status", "true");
+			map.put("routeList", routeList);
+			map.put("msg", "获取成功");
+		} else {
+			map.put("status", "false");
+			map.put("msg", "获取失败");
+		}
+		return output(JsonUtil.toJson(map));
+	}
+
+}

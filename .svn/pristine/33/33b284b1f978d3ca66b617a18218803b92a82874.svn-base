@@ -1,0 +1,26 @@
+package com.telecom.entity;
+
+import javax.persistence.Entity;
+
+/**
+ * 实体类 - 塔兮用户
+ */
+
+@Entity
+public class TowerUser extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6270400718365676322L;
+
+	private String phone;//用户手机号
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+}

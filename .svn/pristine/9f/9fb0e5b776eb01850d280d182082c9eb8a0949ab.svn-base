@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>添加/编辑</title>
+<link href="${base}/template/admin/css/base.css" rel="stylesheet" type="text/css" />
+<link href="${base}/template/admin/css/admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${base}/template/common/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/template/common/js/jquery.tools.js"></script>
+<script type="text/javascript" src="${base}/template/common/js/jquery.validate.js"></script>
+<script type="text/javascript" src="${base}/template/common/js/jquery.validate.methods.js"></script>
+<script type="text/javascript" src="${base}/template/admin/js/base.js"></script>
+<script type="text/javascript" src="${base}/template/admin/js/admin.js"></script>
+</head>
+
+<body class="input route">
+	<div class="bar">
+		<#if isAddAction>添加<#else>编辑</#if>
+	</div>
+	<div id="validateErrorContainer" class="validateErrorContainer">
+		<div class="validateErrorTitle">以下信息填写有误,请重新填写</div>
+		<ul></ul>
+	</div>
+	<div class="body">
+		<form id="validateForm" action="<#if isAddAction>route!save.action<#else>route!update.action</#if>" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="${id}" />
+			<table class="inputTable">
+				<tr>
+					<th>
+						名称: 
+					</th>
+					<td>
+						<input type="text" name="musicCompany.name" class="formText" value="${(musicCompany.name)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						地市选择: 
+					</th>
+					<td>
+						<select name="musicCompany.area.id">
+							<option value="">请选择...</option>
+							<#list areaList as obj>
+								<option value="${obj.id}"<#if (obj == musicCompany.area)!> selected</#if>>
+									${obj.name}
+								</option>
+							</#list>
+						</select>
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						管理员手机号: 
+					</th>
+					<td>
+						<input type="text" id="phone" name="musicCompany.phone" class="formText" value="${(musicCompany.phone)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						邮箱: 
+					</th>
+					<td>
+						<input type="text" id="email"  name="musicCompany.email" class="formText" value="${(musicCompany.email)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						联系人: 
+					</th>
+					<td>
+						<input type="text" name="musicCompany.linkman" class="formText" value="${(musicCompany.linkman)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>					
+				<tr>
+					<th>
+						资费类型: 
+					</th>
+					<td>
+						<select name="musicCompany.feeType">
+							<option value="">请选择...</option>
+							<option value="5">5</option>
+							<option value="20">20</option>
+							<option value="50">5+0</option>
+						</select>
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						扣费手机号: 
+					</th>
+					<td>
+						<input type="text" name="musicCompany.feePhone" class="formText" value="${(musicCompany.feePhone)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						业务受理人: 
+					</th>
+					<td>
+						<input type="text" name="musicCompany.managerName" class="formText" value="${(musicCompany.managerName)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						业务受理人电话: 
+					</th>
+					<td>
+						<input type="text" id="phone" name="musicCompany.managerId" class="formText" value="${(musicCompany.managerId)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						工单来源(*"0"代表武电实业,"1"代表省增值转单*): 
+					</th>
+					<td>
+						<input type="text" id="phone" name="musicCompany.workType" class="formText" value="${(musicCompany.workType)!}" />
+						<label class="requireField">*</label>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+						营业执照: 
+					</th>
+					<td>
+						<input type="file" name="qualification" style="width:185px;height:23px;"/>
+						<#if !isAddAction><a class="viewImageBtn" id="viewImageBtn1" index="1" href="javascript:void(0);" location-url="${(musicCompany.qualificationUrl)!}" target="_blank">[查看图片]</a><#else><label class="requireField">*</label></#if>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						身份证: 
+					</th>
+					<td>
+						<input type="file" name="idcardFront" style="width:185px;height:23px;"/>
+						<#if !isAddAction><a class="viewImageBtn" id="viewImageBtn1" index="1" href="javascript:void(0);" location-url="${(musicCompany.idcardFrontUrl)!}" target="_blank">[查看图片]</a><#else><label class="requireField">*</label></#if>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						确认单: 
+					</th>
+					<td>
+						<input type="file" name="confirm" style="width:185px;height:23px;"/>
+						<#if !isAddAction><a class="viewImageBtn" id="viewImageBtn1" index="1" href="javascript:void(0);" location-url="${(musicCompany.confirmUrl)!}" target="_blank">[查看图片]</a><#else><label class="requireField">*</label></#if>
+					</td>
+				</tr>			
+			</table>
+			<div class="buttonArea">
+				<input type="submit" class="formButton" value="确  定" hidefocus />&nbsp;&nbsp;
+				<input type="button" class="formButton" onclick="window.history.back(); return false;" value="返  回" hidefocus />
+			</div>
+		</form>
+	</div>
+</body>
+</html>

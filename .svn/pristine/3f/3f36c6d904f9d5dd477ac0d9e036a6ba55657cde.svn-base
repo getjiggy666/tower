@@ -1,0 +1,26 @@
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://127.0.0.1:3306/tower?useUnicode=true&characterEncoding=UTF-8
+jdbc.username=root
+jdbc.password=1234
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.show_sql=false
+hibernate.format_sql=false
+hibernate.hbm2ddl.auto=update
+hibernate.cache.use_second_level_cache=true
+hibernate.cache.provider_class=org.hibernate.cache.OSCacheProvider
+hibernate.cache.use_query_cache=false
+hibernate.jdbc.fetch_size=50
+hibernate.jdbc.batch_size=30
+pool.cachePrepStmts=true
+pool.prepStmtCacheSize=250
+pool.prepStmtCacheSqlLimit=2048
+pool.useServerPrepStmts=true
+pool.connectionTestQuery=select 1
+pool.connectionTimeout=30000
+pool.idleTimeout=600000
+pool.maxLifetime=1800000
+pool.minimumIdle=100
+pool.maximumPoolSize=300
+namingStrategy.tablePrefix=ct_
+namingStrategy.isAddUnderscores=true
+namingStrategy.maxLength=64 

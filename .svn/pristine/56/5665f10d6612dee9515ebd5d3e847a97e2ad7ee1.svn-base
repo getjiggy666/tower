@@ -1,0 +1,130 @@
+/* @文件名：  style.js
+ * @作  者：  李鹏
+ * @创建时间：2015/05/22
+ * @主要内容：主站主CSS
+ */ 
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+ul, li, dl, dt, dd, ol {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+body {
+	font-family: 'microsoft yahei', "宋体", Arial, Helvetica, sans-serif;
+	background:#abc4d8 url(../images/bg.jpg) top center no-repeat;
+	width: 100%;
+	position: absolute;
+    *position:inherit;
+}
+.cursor {
+	cursor: pointer;
+}
+.nocursor{
+	cursor:none;
+}
+/* Remove annoying border on linked images. */
+a img {
+	border: none;
+}
+/*common*/
+.float-r {
+	float: right;
+}
+.float-l {
+	float: left;
+}
+.clearfix {
+	clear: both;
+	height: 0px;
+	line-height: 0;
+	overflow: hidden;
+	font-size: 0;
+}
+/*login main content*/
+.contentbg{
+	width:652px;
+	height:330px;
+}
+.content{
+  padding:12px;
+  width:632px;
+  height:310px;
+  margin:0 auto;
+  position:relative;
+  margin-top:200px;
+  background:rgba(255,255,255,0.3);/* IE9、标准浏览器、IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂 */
+}
+@media \0screen\,screen\9 {/* 只支持IE6、7、8 */
+  .content{
+    background-color:#fff;
+    filter:Alpha(opacity=30);
+    position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+  }
+  .content .login{
+    position: relative;/* 设置子元素为相对定位，可让子元素不继承Alpha值 */
+  }  
+}
+.login{
+	width:632px;
+	height:310px;
+	background:#FFF;
+}
+.login .title{
+	background:url(../images/login-top.jpg) top no-repeat;
+	height:53px;
+	width:632px;
+}
+.login .con{
+	width:632px;
+	height:257px;
+	background:url(../images/logo.jpg) right top no-repeat;
+}
+
+.login .con .username{
+	padding-top:40px;
+}
+.login .con .username,
+.login .con .password{
+	height:60px;
+	line-height:60px;
+	padding-left:50px;
+	font-size:14px;
+	color:#3e5b69;
+}
+.login .con>div span{
+	text-align:right;
+}
+.login .con input{
+	background:#f2f4f5;
+	border:1px solid #dfe7eb;
+	width:191px;
+	height:36px;
+	line-height:36px;
+	color:#999;
+	padding-left:15px;
+	position:relative;
+	_bottom:-10px;
+}
+.login .con .btn{
+	padding-top:20px;
+	padding-left:20px;
+	text-align:right;
+	padding-right:320px;
+}
+.login .con .btn img{
+	margin-left:30px;
+}

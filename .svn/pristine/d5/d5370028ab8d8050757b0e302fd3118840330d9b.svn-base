@@ -1,0 +1,39 @@
+package com.telecom.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.telecom.dao.RouteDao;
+import com.telecom.entity.Route;
+import com.telecom.entity.ScenicSpot;
+
+/**
+ * Dao实现类 - 路线
+ */
+
+@Repository("routeDaoImpl")
+public class RouteDaoImpl extends BaseDaoImpl<Route, String> implements
+		RouteDao {
+
+	/**
+	 * 根据线路id获取地区详情
+	 */
+	@Override
+	public List<ScenicSpot> getScenicSpotList(String routeId) {
+		// TODO Auto-generated method stub
+		String scenicSpotIdSql = "select scenic_spot_id from route_list where route_id = :routeId";
+		@SuppressWarnings("unchecked")
+		List<String> list = getSession().createSQLQuery(scenicSpotIdSql)
+				.setParameter("routeId", routeId).list();
+		List<ScenicSpot> scenicSpotList = new ArrayList<ScenicSpot>();
+		for (String scenicSpotId : list) {
+			String hql = "from ScenicSpot as scenicSpot where lower(scenicSpot.id) = lower(:scenicSpotId)";
+			scenicSpotList.add((ScenicSpot) getSession().createQuery(hql)
+					.setParameter("scenicSpotId", scenicSpotId).uniqueResult());
+		}
+		return scenicSpotList;
+	}
+
+}

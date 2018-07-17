@@ -1,0 +1,10 @@
+package com.telecom.dao;
+
+import com.telecom.entity.TowerUser;
+
+public interface TowerUserDao extends BaseDao<TowerUser, String> {
+
+	//通过手机号获取id
+	public String getTowerUserIdByPhone(String phone);
+
+}

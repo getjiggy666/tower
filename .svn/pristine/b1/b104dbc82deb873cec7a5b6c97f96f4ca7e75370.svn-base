@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-2.0.4.xsd"
+       default-lazy-init="true">
+	
+	<sec:http auto-config="true" servlet-api-provision="false" access-denied-page="/html/error_page_access_denied.html">
+		<sec:form-login login-page="/admin/login.jsp" login-processing-url="/admin/login/check" default-target-url="/admin/page!main.action" authentication-failure-url="/admin/login.jsp" always-use-default-target="true"  />
+		<sec:logout invalidate-session="true" logout-success-url="/admin/login.jsp" logout-url="/admin/logout" />
+		
+		<!-- 后台登录 -->
+		<sec:intercept-url pattern="/admin/index.jsp" filters="none" />
+		<!-- 邮件模板管理 -->
+		<sec:intercept-url pattern="/admin/mail_template!**" access="ROLE_MAIL_TEMPLATE" />
+		<!-- 缓存管理 -->
+		<sec:intercept-url pattern="/admin/cache!**" access="ROLE_CACHE" />
+		<!-- 用户管理 -->
+		<sec:intercept-url pattern="/admin/admin!**" access="ROLE_ADMIN" />
+		<!-- 角色管理 -->
+		<sec:intercept-url pattern="/admin/role!**" access="ROLE_ROLE" />
+		<!-- 通知管理 -->
+		<sec:intercept-url pattern="/admin/message!**" access="ROLE_MESSAGE" />
+		<!-- 日志管理 -->
+		<sec:intercept-url pattern="/admin/log!**" access="ROLE_LOG" />
+		<!-- 系统设置 -->
+		<sec:intercept-url pattern="/admin/setting!**" access="ROLE_SETTING" />
+		<!-- 基础管理权限 -->
+		<sec:intercept-url pattern="/admin/**.action" access="ROLE_BASE" />
+		<!-- 业务产品管理 -->
+		<sec:intercept-url pattern="/admin/product!**" access="ROLE_PRODUCT" />
+		
+		<!-- 内容管理 -->
+		<!-- 添加文章 -->
+		<sec:intercept-url pattern="/admin/article!save.action" access="ROLE_ARTICLE_ADD" />
+		<!-- 删除文章 -->
+		<sec:intercept-url pattern="/admin/article!delete.action" access="ROLE_ARTICLE_DELETE" />
+		<!-- 修改文章 -->
+		<sec:intercept-url pattern="/admin/article!update.action" access="ROLE_ARTICLE_UPDATE" />
+		<!-- 查看文章 -->
+		<sec:intercept-url pattern="/admin/article!list.action" access="ROLE_ARTICLE" />
+		<!-- 添加文章分类 -->
+		<sec:intercept-url pattern="/admin/article_category!save.action" access="ROLE_ARTICLE_CATEGORY_ADD" />
+		<!-- 删除文章分类 -->
+		<sec:intercept-url pattern="/admin/article_category!delete.action" access="ROLE_ARTICLE_CATEGORY_DELETE" />
+		<!-- 修改文章分类 -->
+		<sec:intercept-url pattern="/admin/article_category!update.action" access="ROLE_ARTICLE_CATEGORY_UPDATE" />
+		<!-- 查看文章分类 -->
+		<sec:intercept-url pattern="/admin/article_category!list.action" access="ROLE_ARTICLE_CATEGORY" />
+	</sec:http>
+
+	<sec:authentication-provider user-service-ref="adminDetailsServiceImpl">
+		<sec:password-encoder hash="md5" />
+	</sec:authentication-provider>
+
+</beans>

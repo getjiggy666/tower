@@ -1,0 +1,32 @@
+package com.telecom.service.impl;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.telecom.dao.TowerUserDao;
+import com.telecom.entity.TowerUser;
+import com.telecom.service.TowerUserService;
+
+/**
+ * Service实现类 - 角色
+ */
+
+@Service("towerUserServiceImpl")
+public class TowerUserServiceImpl extends BaseServiceImpl<TowerUser, String>
+		implements TowerUserService {
+
+	@Resource(name = "towerUserDaoImpl")
+	TowerUserDao towerUserDao;
+
+	@Resource(name = "towerUserDaoImpl")
+	public void setBaseDao(TowerUserDao towerUserDao) {
+		super.setBaseDao(towerUserDao);
+	}
+
+	@Override
+	public String getTowerUserIdByPhone(String phone) {
+		// TODO Auto-generated method stub
+		return towerUserDao.getTowerUserIdByPhone(phone);
+	}
+}

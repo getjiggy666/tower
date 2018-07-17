@@ -1,0 +1,11 @@
+package com.telecom.dao;
+
+import com.telecom.entity.Route;
+
+/**
+ * Dao接口 - 路线
+ */
+
+public interface RouteDao extends BaseDao<Route, String> {
+
+}

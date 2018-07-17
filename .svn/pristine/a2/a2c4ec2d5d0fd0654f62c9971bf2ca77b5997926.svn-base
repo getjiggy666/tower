@@ -1,0 +1,11 @@
+package com.telecom.service;
+
+import com.telecom.entity.Route;
+
+/**
+ * Service接口 - 路线
+ */
+
+public interface RouteService extends BaseService<Route, String> {
+
+}

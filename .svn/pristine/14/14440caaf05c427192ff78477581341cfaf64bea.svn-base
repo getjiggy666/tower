@@ -1,0 +1,16 @@
+package com.telecom.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.telecom.dao.RouteDao;
+import com.telecom.entity.Route;
+
+/**
+ * Dao实现类 - 路线
+ */
+
+@Repository("routeDaoImpl")
+public class RouteDaoImpl extends BaseDaoImpl<Route, String> implements
+		RouteDao {
+
+}
